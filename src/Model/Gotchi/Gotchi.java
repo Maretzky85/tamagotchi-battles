@@ -10,6 +10,8 @@ public class Gotchi extends ImageView {
     private int stamina = 100;
     private String name;
     private String imageUrl;
+    private Action action;
+    private Type type;
 
     public Gotchi(int speed, int attack, int defense, String name, String imageUrl) {
         this.speed = speed;
@@ -58,4 +60,17 @@ public class Gotchi extends ImageView {
 
     public void dodge() {
     }
+}
+
+enum Type{
+    WATER,
+    FIRE,
+    EARTH
+}
+
+enum Action {
+    ATTACK,
+    DEFENSE,
+    DODGE,
+    REST
 }

@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 public class ChooseGotchiScene extends Pane {
 
     public ChooseGotchiScene() {
-        int x = 0;
-        int y = 0;
+        int x = 30;
+        int y = 30;
         int margin = 90;
         ChooseGotchi newGotchi = new ChooseGotchi(new Player("Marchewka", 1));
         for (Gotchi singleGotchi : newGotchi.gotchies) {
