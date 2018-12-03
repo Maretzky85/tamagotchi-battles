@@ -1,5 +1,6 @@
 package View;
 
+import Model.Setup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,12 +11,11 @@ public class MainView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Scene gotchiScene = new Scene(new ChooseGotchiScene(), Setup.DISPLAY_WIDTH, Setup.DISPLAY_HEIGHT);
+        primaryStage.setTitle("Tamagotchi Battles");
+        primaryStage.setScene(gotchiScene);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
