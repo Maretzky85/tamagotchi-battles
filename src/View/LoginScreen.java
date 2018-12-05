@@ -1,10 +1,8 @@
 package View;
 
-import javafx.application.Application;
+import Controller.Controller;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,9 +14,20 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-public class LoginScreen extends Application {
+public class LoginScreen extends BorderPane {
+
+    InputHandler inputHandler = new InputHandler();
+
+    GridPane gridpane;
+    FlowPane topBanner;
+
+    public LoginScreen(){
+        this.gridpane = createGridPane();
+        this.topBanner = createTopBanner();
+        setTop(topBanner);
+        setCenter(gridpane);
+    }
 
     private GridPane createGridPane() {
         GridPane gridpane = new GridPane();
@@ -37,8 +46,7 @@ public class LoginScreen extends Application {
 
         Button saveButton = new Button("Login");
         saveButton.setOnAction(e -> {
-            Button button = (Button) e.getTarget();
-            button.setText("Please Wait");
+            inputHandler.handleLogin(fUnameFld.getText());
         });
 
         GridPane.setHalignment(fUnameLbl, HPos.CENTER);
@@ -71,24 +79,7 @@ public class LoginScreen extends Application {
         return topBanner;
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 450, 200, Color.WHITE);
-
-        GridPane gridpane = createGridPane();
-        FlowPane topBanner = createTopBanner();
-
-        root.setTop(topBanner);
-        root.setCenter(gridpane);
-
-        primaryStage.setTitle("Gotchi Battles Login");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
+    public void addObserver(Controller controller) {
+        inputHandler.addObserver(controller);
     }
 }
