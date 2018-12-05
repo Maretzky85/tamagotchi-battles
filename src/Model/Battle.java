@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class Battle {
-    ArrayList<Player> players;
+    ArrayList<Player> players = new ArrayList<>();
 
     public void addPlayer(String name){
         players.add(new Player(name));
