@@ -3,8 +3,6 @@ package View;
 import Model.ChooseGotchi;
 import Model.Gotchi.Gotchi;
 import Model.Player;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -27,7 +25,6 @@ public class ChooseGotchiScene extends Pane {
     private void displayGotchies() {
         int x = 50;
         int y = 100;
-        int counter = 0;
         for (Gotchi singleGotchi : newGotchi.gotchies) {
             Image image = new Image(singleGotchi.getImageUrl());
             singleGotchi.setImage(image);
@@ -45,7 +42,6 @@ public class ChooseGotchiScene extends Pane {
             this.getChildren().add(text);
             this.getChildren().add(singleGotchi);
             x += 200;
-            counter++;
         }
     }
 
