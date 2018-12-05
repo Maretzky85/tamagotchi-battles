@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Model.ChooseGotchi;
 import Model.Gotchi.Gotchi;
 import Model.Player;
@@ -10,6 +11,7 @@ import javafx.scene.text.Text;
 public class ChooseGotchiScene extends Pane {
 
     public ChooseGotchiScene() {
+
         int x = 30;
         int y = 30;
         int margin = 90;
