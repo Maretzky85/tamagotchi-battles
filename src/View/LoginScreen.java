@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MainView extends Application {
+public class LoginScreen extends Application {
 
     private GridPane createGridPane() {
         GridPane gridpane = new GridPane();
