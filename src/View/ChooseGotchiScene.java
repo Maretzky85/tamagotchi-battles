@@ -13,11 +13,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class ChooseGotchiScene extends Pane {
-    Player player = new Player("Marchewka", 1);
+    //TODO get player from previous scene
+    private Player player;
     private ChooseGotchi newGotchi = new ChooseGotchi(player);
     private final ToggleGroup gotchiesGroup = new ToggleGroup();
 
-    public ChooseGotchiScene() {
+    public ChooseGotchiScene(Player player) {
+        this.player = player;
         displayGotchies();
         proceedButton();
     }
