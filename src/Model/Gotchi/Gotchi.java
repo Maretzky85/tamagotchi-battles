@@ -11,14 +11,25 @@ public class Gotchi extends ImageView {
     private String name;
     private String imageUrl;
     private Action action;
-    private Type type;
+    private Type primary;
+    private Type secondary;
 
-    public Gotchi(int speed, int attack, int defense, String name, String imageUrl) {
+    public Gotchi(int speed, int attack, int defense, String name, String imageUrl, Type primary, Type secondary) {
         this.speed = speed;
         this.attack = attack;
         this.defense = defense;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.primary = primary;
+        this.secondary = secondary;
+    }
+
+    public Type getPrimary() {
+        return primary;
+    }
+
+    public Type getSecondary() {
+        return secondary;
     }
 
     public int getSpeed() {
