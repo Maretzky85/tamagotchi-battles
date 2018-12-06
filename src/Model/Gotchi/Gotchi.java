@@ -3,41 +3,54 @@ package Model.Gotchi;
 import javafx.scene.image.ImageView;
 
 public class Gotchi extends ImageView {
-    private int speed;
-    private int attack;
-    private int defense;
-    private int health = 100;
-    private int stamina = 100;
+    private double speed;
+    private double attack;
+    private double attackSecondary;
+    private double defense;
+    private double health = 100;
+    private double stamina = 100;
     private String name;
     private String imageUrl;
     private Action action;
-    private Type type;
+    private Type primary;
+    private Type secondary;
 
-    public Gotchi(int speed, int attack, int defense, String name, String imageUrl) {
+    public Gotchi(double speed, double attack, double defense, String name, String imageUrl, Type primary, Type secondary) {
         this.speed = speed;
         this.attack = attack;
         this.defense = defense;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.primary = primary;
+        this.secondary = secondary;
+        this.attackSecondary = attack * 0.75;
     }
 
-    public int getSpeed() {
+    public Type getPrimary() {
+        return primary;
+    }
+
+    public Type getSecondary() {
+        return secondary;
+    }
+
+    public double getSpeed() {
         return speed;
     }
 
-    public int getAttack() {
+    public double getAttack() {
         return attack;
     }
 
-    public int getDefense() {
+    public double getDefense() {
         return defense;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public int getStamina() {
+    public double getStamina() {
         return stamina;
     }
 
@@ -50,27 +63,29 @@ public class Gotchi extends ImageView {
     }
 
     public void attack() {
+        this.action = Action.ATTACK;
+    }
+
+    public void attackSecondary() {
+        this.action = Action.ATTACKSECONDARY;
     }
 
     public void defense() {
+        this.action = Action.DEFENSE;
     }
 
     public void rest(){
     }
 
     public void dodge() {
+        this.action = Action.DODGE;
     }
-}
 
-enum Type{
-    WATER,
-    FIRE,
-    EARTH
-}
+    public Action getAction() {
+        return action;
+    }
 
-enum Action {
-    ATTACK,
-    DEFENSE,
-    DODGE,
-    REST
+    public void setHealth(double health) {
+        this.health = health;
+    }
 }

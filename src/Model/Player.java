@@ -17,4 +17,8 @@ public class Player {
     public void setGotchi(Gotchi gotchi) {
         this.gotchi = gotchi;
     }
+
+    public Gotchi getGotchi() {
+        return gotchi;
+    }
 }
