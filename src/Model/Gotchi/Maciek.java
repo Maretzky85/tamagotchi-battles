@@ -2,6 +2,6 @@ package Model.Gotchi;
 
 public class Maciek extends Gotchi {
     public Maciek() {
-        super(2, 3, 5, "Juliusz", "/resources/maciek.png");
+        super(3, 4, 7, "Juliusz", "/resources/maciek.png");
     }
 }
