@@ -1,7 +1,6 @@
 package Model;
 
-import Model.Gotchi.Gotchi;
-import Model.Gotchi.Juliusz;
+import Model.Gotchi.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 public class ChooseGotchi {
 
     // public, so the view can iterate through all gotchies in order to display them
-    public List<Gotchi> gotchies = Arrays.asList(new Juliusz(), new Juliusz(), new Juliusz(), new Juliusz(), new Juliusz(), new Juliusz());
+    public List<Gotchi> gotchies = Arrays.asList(new Adam(), new Alex(), new Jarek(), new Juliusz(), new Maciek());
 
     private Gotchi pickedGotchi;
 
