@@ -29,7 +29,7 @@ public class ChooseGotchiScene extends Pane {
     }
 
     private void displayGotchies() {
-        int x = 50;
+        int x = 20;
         int y = 100;
         for (Gotchi singleGotchi : newGotchi.gotchies) {
             Image image = new Image(singleGotchi.getImageUrl());
@@ -41,7 +41,8 @@ public class ChooseGotchiScene extends Pane {
             text.setText(
                     "Attack: " + singleGotchi.getAttack() + "\n" +
                     "Defense: " + singleGotchi.getDefense() + "\n" +
-                    "Speed: " + singleGotchi.getSpeed());
+                    "Speed: " + singleGotchi.getSpeed() + "\n" +
+                    "Type: " + singleGotchi.getPrimary() + " / " + singleGotchi.getSecondary());
             text.setX(x + image.getWidth());
             text.setY(y + 30);
             displayRadioButtons(x + (int) image.getWidth(), y, singleGotchi.getName());

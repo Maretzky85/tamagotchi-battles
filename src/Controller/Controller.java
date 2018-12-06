@@ -5,19 +5,12 @@ import Model.Setup;
 import View.BattleView;
 import View.ChooseGotchiScene;
 import View.LoginScreen;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 public class Controller implements Observer {
 
