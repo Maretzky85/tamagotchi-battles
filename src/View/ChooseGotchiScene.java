@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Model.ChooseGotchi;
 import Model.Gotchi.Gotchi;
 import Model.Player;
@@ -12,6 +13,7 @@ import javafx.scene.text.Text;
 
 public class ChooseGotchiScene extends Pane {
     //TODO get player from previous scene
+    InputHandler inputHandler = new InputHandler();
     private Player player;
     private ChooseGotchi newGotchi = new ChooseGotchi(player);
     private final ToggleGroup gotchiesGroup = new ToggleGroup();
@@ -20,6 +22,10 @@ public class ChooseGotchiScene extends Pane {
         this.player = player;
         displayGotchies();
         proceedButton();
+    }
+
+    public void addObserver(Controller controller) {
+        inputHandler.addObserver(controller);
     }
 
     private void displayGotchies() {
@@ -64,6 +70,7 @@ public class ChooseGotchiScene extends Pane {
                     alert("You must choose Gotchi in order to proceed further.");
                 } else {
                     player.setGotchi(newGotchi.gotchies.get(gotchiesGroup.getToggles().indexOf(gotchiesGroup.getSelectedToggle())));
+                    inputHandler.handleChooseGothi();
                     //TODO: load next Scene
                 }
             }
