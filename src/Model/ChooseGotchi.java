@@ -8,7 +8,7 @@ import java.util.List;
 public class ChooseGotchi {
 
     // public, so the view can iterate through all gotchies in order to display them
-    public List<Gotchi> gotchies = Arrays.asList(new Adam(), new Alex(), new Jarek(), new Juliusz(), new Maciek());
+    public List<Gotchi> gotchies = Arrays.asList(new Adam(), new Alex(), new Jarek(), new Marek(), new Maciek(), new Svieta());
 
     private Gotchi pickedGotchi;
 
