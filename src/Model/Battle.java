@@ -1,14 +1,13 @@
 package Model;
 
 import Model.Gotchi.Action;
-import Model.Gotchi.Gotchi;
 import Model.Gotchi.Type;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Battle {
-    ArrayList<Player> players = new ArrayList<>();
+    static ArrayList<Player> players = new ArrayList<>();
 
     public void addPlayer(String name){
         players.add(new Player(name));
@@ -21,6 +20,7 @@ public class Battle {
     public void battleResults(Player player1, Player player2) {
         Action player1action = player1.getGotchi().getAction();
         Action player2action = player2.getGotchi().getAction();
+
         // calculates results for both pets attacking
         if (isAttacking(player1action) && isAttacking(player2action)) {
             if (player1.getGotchi().getSpeed() > player2.getGotchi().getSpeed()) {
@@ -31,6 +31,7 @@ public class Battle {
                 getDamageIfEnemyNotDead(player2, player1);
             }
         }
+
         // calculates results for one player attacking, second defending or dodging
         if (isAttacking(player1action) && isDefendingOrDodging(player2action) ||
             isAttacking(player2action) && isDefendingOrDodging(player1action)) {
@@ -52,9 +53,10 @@ public class Battle {
                 }
             }
         }
+
         // can get removed, nothing happens anyways
         if (isDefendingOrDodging(player1.getGotchi().getAction()) && isDefendingOrDodging(player2.getGotchi().getAction())) {
-            System.out.println("Nothing happens");
+            System.out.println("Nothing happened, both players went for defensive stance.");
         }
     }
 
@@ -78,8 +80,10 @@ public class Battle {
 
     private void dealDamageToEnemy(Player attacker, Player defender, double defenseModifier) {
         double damage = attacker.getGotchi().getAttack() * calculateAttackModifier(getTypeOfAttack(attacker), defender.getGotchi().getPrimary());
-        if (damage + defenseModifier > 0) {
-            defender.getGotchi().setHealth(defender.getGotchi().getHealth() - (damage + defenseModifier));
+        if (damage - defenseModifier > 0) {
+            defender.getGotchi().setHealth(defender.getGotchi().getHealth() - damage + defenseModifier);
+        } else {
+            System.out.println("Defense higher than attack damage. No damage dealt.");
         }
     }
 

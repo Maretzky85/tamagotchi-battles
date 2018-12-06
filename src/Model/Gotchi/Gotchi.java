@@ -78,7 +78,7 @@ public class Gotchi extends ImageView {
     }
 
     public void dodge() {
-        this.action = Action.DEFENSE;
+        this.action = Action.DODGE;
     }
 
     public Action getAction() {
