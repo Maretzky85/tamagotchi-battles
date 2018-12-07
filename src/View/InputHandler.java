@@ -10,35 +10,6 @@ import java.util.Observable;
 public class InputHandler extends Observable {
     String[] infoToSend = new String[2];
 
-    @FXML
-    private Button dodgeAction;
-    @FXML
-    private Button restAction;
-    @FXML
-    private Button dependsAction;
-    @FXML
-    private Button attackAction;
-    @FXML
-    private Label playerCommand;
-    @FXML
-    private Label computerCommand;
-
-    public void dodgeAction(ActionEvent actionEvent) {
-        playerCommand.setText("DODGE");
-    }
-
-    public void restAction(ActionEvent actionEvent) {
-        playerCommand.setText("REST");
-    }
-
-    public void dependsAction(ActionEvent actionEvent) {
-        playerCommand.setText("DEPENDS");
-    }
-
-    public void attackAction(ActionEvent actionEvent) {
-        playerCommand.setText("ATTAK");
-    }
-
     public void handleLogin(String login) {
         infoToSend = new String[2];
         infoToSend[0] = "loginScreen";
