@@ -41,7 +41,9 @@ public class Controller implements Observer {
 
     private void setScene3(){
         try {
-            battleView = new BattleView().getBattleScene();
+            BattleView battleViewController= new BattleView();
+            battleViewController.addObserver(this);
+            battleView = battleViewController.getBattleScene();
         } catch (IOException e) {
             e.printStackTrace();
         }

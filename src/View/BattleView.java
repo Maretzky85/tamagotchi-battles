@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class BattleView{
+    InputHandler inputHandler = new InputHandler();
+
     @FXML
     private Button dodgeAction;
 
@@ -51,6 +54,10 @@ public class BattleView{
 
     public void attackAction(ActionEvent actionEvent) {
         playerCommand.setText("ATTAK");
+    }
+
+    public void addObserver(Controller controller) {
+        inputHandler.addObserver(controller);
     }
 
     private static Parent loadSceneFromFxml(Object viewController) throws IOException {
