@@ -4,10 +4,10 @@ import Model.Gotchi.Gotchi;
 
 public class Player {
     private String name;
+
     private static int instance = 0;
     private int id = 0;
     private Gotchi gotchi;
-
     public Player(String name) {
         this.name = name;
         this.id = instance;
@@ -20,5 +20,9 @@ public class Player {
 
     public Gotchi getGotchi() {
         return gotchi;
+    }
+
+    public String getName() {
+        return name;
     }
 }

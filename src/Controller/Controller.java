@@ -19,7 +19,8 @@ public class Controller implements Observer {
 
     LoginScreen loginView = new LoginScreen();
     ChooseGotchiScene chooseView;
-    Scene battleView;
+    BattleView battleView;
+    Scene battleScene;
 
 
 
@@ -41,13 +42,14 @@ public class Controller implements Observer {
 
     private void setScene3(){
         try {
-            BattleView battleViewController= new BattleView();
-            battleViewController.addObserver(this);
-            battleView = battleViewController.getBattleScene();
+            battleView = new BattleView();
+            battleView.addObserver(this);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("File problem");
         }
-        primaryStage.setScene(battleView);
+        battleScene = battleView.getBattleScene();
+        primaryStage.setScene(battleScene);
+        battleView.addPlayer(arena.getPlayer1());
     }
 
 
@@ -56,10 +58,18 @@ public class Controller implements Observer {
     public void update(Observable o, Object arg) {
         String[] arguments = (String[]) arg;
         if ( arguments[0].equals("loginScreen") ){
-            setScene2(arguments[0]);
+            setScene2(arguments[1]);
         }
         if ( arguments[0].equals("gotchiChoose") ){
             setScene3();
+        }
+        if ( arguments[0].equals("Battle") ){
+            if ( arguments[1].equals("PlayerAction") ){
+                if ( arguments[2].equals("ATTAK") ){
+                    arena.getPlayer1().getGotchi().attack();
+                }
+
+            }
         }
     }
 }

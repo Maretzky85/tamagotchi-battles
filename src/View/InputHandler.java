@@ -1,9 +1,5 @@
 package View;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 import java.util.Observable;
 
@@ -23,6 +19,15 @@ public class InputHandler extends Observable {
         infoToSend = new String[2];
         infoToSend[0] = "gotchiChoose";
         infoToSend[1] = "choosed";
+        setChanged();
+        notifyObservers(infoToSend);
+    }
+
+    public void handleBattle(String action) {
+        infoToSend = new String[3];
+        infoToSend[0] = "Battle";
+        infoToSend[1] = "PlayerAction";
+        infoToSend[2] = action;
         setChanged();
         notifyObservers(infoToSend);
     }
