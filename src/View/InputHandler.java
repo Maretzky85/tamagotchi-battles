@@ -47,6 +47,21 @@ public class InputHandler extends Observable {
         notifyObservers(infoToSend);
     }
 
+    boolean isLoginValid(String login) {
+        if(login.equals("") || login.equals(null)) {
+            return false;
+        }
+
+        char[] charArray = login.toCharArray();
+        for(char loginCharacter : charArray) {
+            int asc = (int) loginCharacter;
+            if( asc < 65 && asc != 45 || asc > 122 || asc > 90 && asc < 97 && asc !=95){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void handleChooseGothi() {
         infoToSend = new String[2];

@@ -46,7 +46,12 @@ public class LoginScreen extends BorderPane {
 
         Button saveButton = new Button("Login");
         saveButton.setOnAction(e -> {
-            inputHandler.handleLogin(fUnameFld.getText());
+            String login = fUnameFld.getText();
+            if(inputHandler.isLoginValid(login)) {
+                inputHandler.handleLogin(login);
+            } else {
+                AlertBox.display("Incorrect username format", "Please only use small letters, big letter, minus and underscore.");
+            }
         });
 
         GridPane.setHalignment(fUnameLbl, HPos.CENTER);
