@@ -48,14 +48,14 @@ public class InputHandler extends Observable {
     }
 
     boolean isLoginValid(String login) {
-        if(login.equals("") || login.equals(null)) {
+        if(login.equals("")) {
             return false;
         }
 
         char[] charArray = login.toCharArray();
         for(char loginCharacter : charArray) {
             int asc = (int) loginCharacter;
-            if( asc < 65 && asc != 45 || asc > 122 || asc > 90 && asc < 97 && asc !=95){
+            if( asc != 45 && asc < 48 || asc < 65 && asc > 57 || asc > 122 || asc > 90 && asc < 97 && asc !=95){
                 return false;
             }
         }
