@@ -5,9 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-
 public class LoseScreen {
 
     public GridPane lose(){
@@ -15,7 +12,7 @@ public class LoseScreen {
         Button button = new Button("Restart Game");
 
 
-        button.setOnAction(e -> System.out.println("but"));
+        button.setOnAction(e -> System.out.println("Reset"));
 
 
         Image image = new Image("/resources/loser.jpg");
