@@ -50,7 +50,7 @@ public class LoginScreen extends BorderPane {
             if(inputHandler.isLoginValid(login)) {
                 inputHandler.handleLogin(login);
             } else {
-                AlertBox.display("Incorrect username format", "Please only use small letters, big letter, minus and underscore.");
+                AlertBox.display("Incorrect username format", "Username cannot be empty. Please only use small letters, big letter, minus and underscore.");
             }
         });
 
