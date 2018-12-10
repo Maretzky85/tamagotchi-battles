@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Battle;
+import Model.Player;
 import Model.Setup;
 import View.BattleView;
 import View.ChooseGotchiScene;
@@ -15,13 +16,14 @@ import java.util.Observer;
 public class Controller implements Observer {
 
     Stage primaryStage;
-    Battle arena = new Battle();
+    Battle arena;
 
     LoginScreen loginView = new LoginScreen();
     ChooseGotchiScene chooseView;
     Scene battleView;
 
-
+    public Boolean player1moved;
+    public Boolean player2moved;
 
 
     public Controller(Stage primaryStage){
@@ -33,10 +35,21 @@ public class Controller implements Observer {
     }
 
     private void setScene2(String name){
-        arena.addPlayer(name);
+        Battle battle = new Battle(this, this::requestUpdate);
+        Thread runner = new Thread(battle);
+        this.arena = battle;
+        arena.addPlayer(playerMaker(name));
+        arena.addPlayer(playerMaker("CPU"));
         chooseView = new ChooseGotchiScene(arena.getPlayer1());
         chooseView.addObserver(this);
         primaryStage.setScene(new Scene(chooseView, Setup.DISPLAY_WIDTH, Setup.DISPLAY_HEIGHT));
+    }
+
+    private Player playerMaker(String name){
+        Player player = new Player(name, arena);
+        Thread runner = new Thread(player);
+        runner.setDaemon(true);
+        return player;
     }
 
     private void setScene3(){
@@ -50,7 +63,9 @@ public class Controller implements Observer {
         primaryStage.setScene(battleView);
     }
 
+    public void requestUpdate(){
 
+    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -60,6 +75,9 @@ public class Controller implements Observer {
         }
         if ( arguments[0].equals("gotchiChoose") ){
             setScene3();
+        }
+        if ( arguments[0].equals("playerAction") ){
+            System.out.println(arguments[1]);
         }
     }
 }

@@ -42,18 +42,23 @@ public class BattleView{
 
     public void dodgeAction(ActionEvent actionEvent) {
         playerCommand.setText("DODGE");
+        inputHandler.handleAction("DODGE");
     }
 
     public void restAction(ActionEvent actionEvent) {
         playerCommand.setText("REST");
+        inputHandler.handleAction("REST");
     }
 
     public void dependsAction(ActionEvent actionEvent) {
         playerCommand.setText("DEPENDS");
+        inputHandler.handleAction("DEPENDS");
+
     }
 
     public void attackAction(ActionEvent actionEvent) {
         playerCommand.setText("ATTAK");
+        inputHandler.handleAction("ATTAK");
     }
 
     public void addObserver(Controller controller) {

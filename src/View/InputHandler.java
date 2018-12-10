@@ -33,11 +33,18 @@ public class InputHandler extends Observable {
         return true;
     }
 
-
-    public void handleChooseGothi() {
+    void handleChooseGothi() {
         infoToSend = new String[2];
         infoToSend[0] = "gotchiChoose";
         infoToSend[1] = "choosed";
+        setChanged();
+        notifyObservers(infoToSend);
+    }
+
+    void handleAction(String action) {
+        infoToSend = new String[2];
+        infoToSend[0] = "playerAction";
+        infoToSend[1] = action;
         setChanged();
         notifyObservers(infoToSend);
     }

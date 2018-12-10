@@ -1,23 +1,35 @@
 package Model;
 
+import Controller.Controller;
 import Model.Gotchi.Action;
 import Model.Gotchi.Type;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Battle {
+public class Battle implements Runnable{
+
+    public Battle(Controller controller, Runnable updater){
+        this.controller = controller;
+    }
+
+    private Runnable updater;
+
+    private Controller controller;
+
     static ArrayList<Player> players = new ArrayList<>();
 
-    public void addPlayer(String name){
-        players.add(new Player(name));
+    public void addPlayer(Player player){
+        players.add(player);
     }
 
     public Player getPlayer1(){
         return players.get(0);
     }
 
-    public void battleResults(Player player1, Player player2) {
+    public void battleResults() {
+        Player player1 = players.get(0);
+        Player player2 = players.get(1);
         Action player1action = player1.getGotchi().getAction();
         Action player2action = player2.getGotchi().getAction();
 
@@ -58,6 +70,7 @@ public class Battle {
         if (isDefendingOrDodging(player1.getGotchi().getAction()) && isDefendingOrDodging(player2.getGotchi().getAction())) {
             System.out.println("Nothing happened, both players went for defensive stance.");
         }
+        updater.run();
     }
 
     private void attackVsDefense(Player attacker, Player defender) {
@@ -136,5 +149,22 @@ public class Battle {
     private double randomValue() {
         Random random = new Random();
         return 0.75 + (1.25 - 0.75) * random.nextDouble();
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            if (controller.player1moved && controller.player2moved){
+                battleResults();
+                updater.run();
+                try {
+                    controller.wait();
+                } catch (InterruptedException ignored) {}
+            }else{
+                try {
+                    controller.wait();
+                } catch (InterruptedException ignored) {}
+            }
+        }
     }
 }
