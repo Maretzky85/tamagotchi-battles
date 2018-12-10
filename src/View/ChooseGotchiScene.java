@@ -29,9 +29,14 @@ public class ChooseGotchiScene extends Pane {
     }
 
     private void displayGotchies() {
-        int x = 20;
+        int x = 320;
         int y = 100;
+        int counter = 0;
         for (Gotchi singleGotchi : newGotchi.gotchies) {
+            if (counter == 3) {
+                x = 320;
+                y = 300;
+            }
             Image image = new Image(singleGotchi.getImageUrl());
             singleGotchi.setImage(image);
             singleGotchi.setX(x);
@@ -49,6 +54,7 @@ public class ChooseGotchiScene extends Pane {
             this.getChildren().add(text);
             this.getChildren().add(singleGotchi);
             x += 200;
+            counter++;
         }
     }
 
@@ -63,7 +69,7 @@ public class ChooseGotchiScene extends Pane {
     private void proceedButton() {
         Button button = new Button("Proceed");
         button.setLayoutX(600);
-        button.setLayoutY(200);
+        button.setLayoutY(450);
         getChildren().add(button);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
