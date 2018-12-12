@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Gotchi.Gotchi;
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -53,7 +54,22 @@ public class Player implements Runnable, Observer{
                 waitForChange();
             }
             if(gotchi.getAction() == null){
-                gotchi.attack();
+                int action = (int) (Math.random() * 3);
+                switch (action){
+                    case 1:
+                        gotchi.attack();
+                        break;
+                    case 2:
+                        gotchi.defense();
+                        break;
+                    case 3:
+                        gotchi.dodge();
+                        break;
+                    default:
+                        gotchi.attack();
+                        break;
+                }
+
                 waitForChange();
             }
         }

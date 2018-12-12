@@ -7,13 +7,13 @@ import Model.Gotchi.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static Model.Gotchi.Action.ATTACK;
+import static Model.Gotchi.Action.*;
 
 public class Battle implements Runnable{
 
     private boolean working =true;
 
-    private int round = 0;
+    private int round = 1;
 
     static ArrayList<Gotchi> gotchis = new ArrayList<>();
 
@@ -30,7 +30,10 @@ public class Battle implements Runnable{
 
     public void battleResults() {
         Action player1action = gotchis.get(0).getAction();
-        Action player2action = gotchis.get(0).getAction();
+        Action player2action = gotchis.get(1).getAction();
+
+        System.out.println(gotchis.get(0).getName() + " - " + gotchis.get(0).getAction());
+        System.out.println(gotchis.get(1).getName() + " - " + gotchis.get(1).getAction());
 
         // calculates results for both pets attacking
         if (isAttacking(player1action) && isAttacking(player2action)) {
@@ -41,7 +44,7 @@ public class Battle implements Runnable{
                 dealDamageToEnemy(gotchis.get(1), gotchis.get(0), 0);
                 getDamageIfEnemyNotDead(gotchis.get(1), gotchis.get(0));
             }
-        }
+        } else
 
         // calculates results for one player attacking, second defending or dodging
         if (isAttacking(player1action) && isDefendingOrDodging(player2action) ||
@@ -63,7 +66,7 @@ public class Battle implements Runnable{
                     dealDamageToEnemy(attacker, defender, 0);
                 }
             }
-        }
+        }else
 
         // can get removed, nothing happens anyways
         if (isDefendingOrDodging(gotchis.get(0).getAction()) && isDefendingOrDodging(gotchis.get(1).getAction())) {
@@ -92,6 +95,7 @@ public class Battle implements Runnable{
     private void dealDamageToEnemy(Gotchi attacker, Gotchi defender, double defenseModifier) {
         double damage = attacker.getAttack() * calculateAttackModifier(getTypeOfAttack(attacker), defender.getPrimary());
         if (damage - defenseModifier > 0) {
+            System.out.println(attacker.getName()+ " dealt to " + defender.getName() + " " +damage+" points od damage");
             defender.setHealth(defender.getHealth() - damage + defenseModifier);
         } else {
             System.out.println("Defense higher than attack damage. No damage dealt.");
@@ -141,7 +145,13 @@ public class Battle implements Runnable{
     }
 
     private boolean isDodgeFailed(Gotchi attacker, Gotchi defender) {
-        return 0 > attacker.getSpeed() * randomValue() - defender.getSpeed() * randomValue();
+        boolean isFailed = 0 > attacker.getSpeed() * randomValue() - defender.getSpeed() * randomValue();
+        if(isFailed){
+            System.out.println(defender.getName()+" dodge failed");
+        }else{
+            System.out.println(defender.getName()+" dodge");
+        }
+        return isFailed;
     }
 
     private double randomValue() {
@@ -162,8 +172,11 @@ public class Battle implements Runnable{
         while(working){
             if (gotchis.size() == 2){
                 if(gotchis.get(0).getAction() != null && gotchis.get(1).getAction() != null){
-                    System.out.println("Round "+ round +" start...");
+                    System.out.println("\n====================================================" +
+                            "\nRound "+ round +" start...");
                     battleResults();
+                    System.out.println(gotchis.get(0).getName()+" - "+ gotchis.get(0).getHealth());
+                    System.out.println(gotchis.get(1).getName()+" - "+ gotchis.get(1).getHealth());
                     round++;
                     for (Gotchi gotchi: gotchis
                          ) {
@@ -174,7 +187,6 @@ public class Battle implements Runnable{
                     synchronized (gotchis.get(1)){
                         gotchis.get(1).notify();
                     }
-
                     waitForChange();
                 }
             }else{
