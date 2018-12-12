@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.Player;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -86,5 +87,8 @@ public class LoginScreen extends BorderPane {
 
     public void addObserver(Controller controller) {
         inputHandler.addObserver(controller);
+    }
+    public void addObserver(Player player) {
+        inputHandler.addObserver(player);
     }
 }

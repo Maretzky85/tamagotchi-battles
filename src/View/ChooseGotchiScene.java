@@ -77,6 +77,9 @@ public class ChooseGotchiScene extends Pane {
                     alert("You must choose Gotchi in order to proceed further.");
                 } else {
                     player.setGotchi(newGotchi.gotchies.get(gotchiesGroup.getToggles().indexOf(gotchiesGroup.getSelectedToggle())));
+                    System.out.println(player.getName()+": picked gotchi: "+
+                            newGotchi.gotchies.get(gotchiesGroup.getToggles().indexOf(gotchiesGroup.getSelectedToggle())).getName()
+                    );
                     inputHandler.handleChooseGothi();
                     //TODO: load next Scene
                 }

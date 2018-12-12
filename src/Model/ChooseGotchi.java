@@ -27,6 +27,7 @@ public class ChooseGotchi {
     // cal this method when user decide to go further
     public void setGotchi() {
         if (pickedGotchi != null) {
+            System.out.println(player.getName()+" picked gotchi: "+pickedGotchi.getName());
             player.setGotchi(this.pickedGotchi);
         } else {
             System.out.println("No Gotchi selected. Please, try again.");

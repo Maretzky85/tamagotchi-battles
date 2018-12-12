@@ -1,53 +1,63 @@
 package Model;
 
+import Controller.Controller;
 import Model.Gotchi.Action;
+import Model.Gotchi.Gotchi;
 import Model.Gotchi.Type;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Battle {
-    static ArrayList<Player> players = new ArrayList<>();
+import static Model.Gotchi.Action.ATTACK;
 
-    public void addPlayer(String name){
-        players.add(new Player(name));
+public class Battle implements Runnable{
+
+    private boolean working =true;
+
+    static ArrayList<Gotchi> gotchis = new ArrayList<>();
+
+
+    public void addPlayer(Gotchi gotchi){
+        if(gotchis.size() < 2){
+            gotchis.add(gotchi);
+            System.out.println("Arena: added Gotchi - "+gotchi.getName());
+        }else{
+            System.out.println("Arena is Full");
+        }
+
     }
 
-    public Player getPlayer1(){
-        return players.get(0);
-    }
-
-    public void battleResults(Player player1, Player player2) {
-        Action player1action = player1.getGotchi().getAction();
-        Action player2action = player2.getGotchi().getAction();
+    public void battleResults() {
+        Action player1action = gotchis.get(0).getAction();
+        Action player2action = gotchis.get(0).getAction();
 
         // calculates results for both pets attacking
         if (isAttacking(player1action) && isAttacking(player2action)) {
-            if (player1.getGotchi().getSpeed() > player2.getGotchi().getSpeed()) {
-                dealDamageToEnemy(player1, player2, 0);
-                getDamageIfEnemyNotDead(player1, player2);
+            if (gotchis.get(0).getSpeed() > gotchis.get(1).getSpeed()) {
+                dealDamageToEnemy(gotchis.get(0), gotchis.get(1), 0);
+                getDamageIfEnemyNotDead(gotchis.get(0), gotchis.get(1));
             } else {
-                dealDamageToEnemy(player2, player1, 0);
-                getDamageIfEnemyNotDead(player2, player1);
+                dealDamageToEnemy(gotchis.get(1), gotchis.get(0), 0);
+                getDamageIfEnemyNotDead(gotchis.get(1), gotchis.get(0));
             }
         }
 
         // calculates results for one player attacking, second defending or dodging
         if (isAttacking(player1action) && isDefendingOrDodging(player2action) ||
             isAttacking(player2action) && isDefendingOrDodging(player1action)) {
-            Player attacker;
-            Player defender;
+            Gotchi attacker;
+            Gotchi defender;
             if (isAttacking(player1action)) {
-                attacker = player1;
-                defender = player2;
+                attacker = gotchis.get(0);
+                defender = gotchis.get(1);
             } else {
-                attacker = player2;
-                defender = player1;
+                attacker = gotchis.get(1);
+                defender = gotchis.get(0);
             }
-            if (defender.getGotchi().getAction() == Action.DEFENSE) {
+            if (defender.getAction() == Action.DEFENSE) {
                 attackVsDefense(attacker, defender);
             }
-            if (defender.getGotchi().getAction() == Action.DODGE) {
+            if (defender.getAction() == Action.DODGE) {
                 if (isDodgeFailed(attacker, defender)) {
                     dealDamageToEnemy(attacker, defender, 0);
                 }
@@ -55,12 +65,12 @@ public class Battle {
         }
 
         // can get removed, nothing happens anyways
-        if (isDefendingOrDodging(player1.getGotchi().getAction()) && isDefendingOrDodging(player2.getGotchi().getAction())) {
+        if (isDefendingOrDodging(gotchis.get(0).getAction()) && isDefendingOrDodging(gotchis.get(1).getAction())) {
             System.out.println("Nothing happened, both players went for defensive stance.");
         }
     }
 
-    private void attackVsDefense(Player attacker, Player defender) {
+    private void attackVsDefense(Gotchi attacker, Gotchi defender) {
         dealDamageToEnemy(attacker, defender, calculateDefense(defender));
     }
 
@@ -68,33 +78,33 @@ public class Battle {
         return action == Action.DEFENSE || action == Action.DODGE;
     }
 
-    private void getDamageIfEnemyNotDead(Player defender, Player attacker) {
-        if (attacker.getGotchi().getHealth() > 0) {
+    private void getDamageIfEnemyNotDead(Gotchi defender, Gotchi attacker) {
+        if (attacker.getHealth() > 0) {
             dealDamageToEnemy(attacker, defender, 0);
         }
     }
 
     private boolean isAttacking(Action action) {
-        return action == Action.ATTACK || action == Action.ATTACKSECONDARY;
+        return action == ATTACK || action == Action.ATTACKSECONDARY;
     }
 
-    private void dealDamageToEnemy(Player attacker, Player defender, double defenseModifier) {
-        double damage = attacker.getGotchi().getAttack() * calculateAttackModifier(getTypeOfAttack(attacker), defender.getGotchi().getPrimary());
+    private void dealDamageToEnemy(Gotchi attacker, Gotchi defender, double defenseModifier) {
+        double damage = attacker.getAttack() * calculateAttackModifier(getTypeOfAttack(attacker), defender.getPrimary());
         if (damage - defenseModifier > 0) {
-            defender.getGotchi().setHealth(defender.getGotchi().getHealth() - damage + defenseModifier);
+            defender.setHealth(defender.getHealth() - damage + defenseModifier);
         } else {
             System.out.println("Defense higher than attack damage. No damage dealt.");
         }
     }
 
-    private Type getTypeOfAttack(Player player) {
-        switch (player.getGotchi().getAction()) {
+    private Type getTypeOfAttack(Gotchi gotchi) {
+        switch (gotchi.getAction()) {
             case ATTACK:
-                return player.getGotchi().getPrimary();
+                return gotchi.getPrimary();
             case ATTACKSECONDARY:
-                return player.getGotchi().getSecondary();
+                return gotchi.getSecondary();
         }
-        return player.getGotchi().getPrimary();
+        return gotchi.getPrimary();
     }
 
     private double calculateAttackModifier(Type firstType, Type secondType) {
@@ -125,16 +135,47 @@ public class Battle {
         return 1;
     }
 
-    private double calculateDefense(Player player) {
-        return player.getGotchi().getDefense() * 2;
+    private double calculateDefense(Gotchi gotchi) {
+        return gotchi.getDefense() * 2;
     }
 
-    private boolean isDodgeFailed(Player attacker, Player defender) {
-        return 0 > attacker.getGotchi().getSpeed() * randomValue() - defender.getGotchi().getSpeed() * randomValue();
+    private boolean isDodgeFailed(Gotchi attacker, Gotchi defender) {
+        return 0 > attacker.getSpeed() * randomValue() - defender.getSpeed() * randomValue();
     }
 
     private double randomValue() {
         Random random = new Random();
         return 0.75 + (1.25 - 0.75) * random.nextDouble();
+    }
+
+    private void waitForChange(){
+        synchronized (this){
+            try {
+                this.wait();
+            } catch (InterruptedException ignored) {}
+        }
+    }
+
+    @Override
+    public void run() {
+        while(working){
+            if (gotchis.size() == 2){
+                if(gotchis.get(0).getAction() != null && gotchis.get(0).getAction() != null){
+                    System.out.println("Round start...");
+                    battleResults();
+                    for (Gotchi gotchi: gotchis
+                         ) {
+                        gotchi.resetAction();
+                    }
+                }else{
+                    System.out.println("Waiting for all players action");
+                    waitForChange();
+                }
+
+            }else{
+                System.out.println("Arena: Waiting for players");
+                waitForChange();
+            }
+        }
     }
 }

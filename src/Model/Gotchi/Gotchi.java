@@ -85,6 +85,10 @@ public class Gotchi extends ImageView {
         return action;
     }
 
+    public void resetAction() {
+        this.action = null;
+    }
+
     public void setHealth(double health) {
         this.health = health;
     }
