@@ -55,7 +55,7 @@ public class BattleView{
     Scene battleScene;
 
     public BattleView() throws IOException {
-        battleScene = new Scene(root, 400, 400);
+        battleScene = new Scene(root, 800, 600);
         System.out.println("Scene created");
     }
 
@@ -81,7 +81,7 @@ public class BattleView{
     }
 
     private static Parent loadSceneFromFxml(Object viewController) throws IOException {
-        URL pathToFXML = viewController.getClass().getResource("sample.fxml");
+        URL pathToFXML = viewController.getClass().getResource("battleView.fxml");
         FXMLLoader loader = new FXMLLoader(pathToFXML);
 
         loader.setController(viewController);
