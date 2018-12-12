@@ -60,7 +60,7 @@ public class Controller implements Observer {
             battleViewController.attachPlayer(player1);
             battleView = battleViewController.getBattleScene();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("File problem");
         }
         primaryStage.setScene(battleView);
         synchronized (arena){

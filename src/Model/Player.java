@@ -79,4 +79,5 @@ public class Player implements Runnable, Observer{
         this.name = arguments[1];
         System.out.println("Player: Name set to: "+name);
     }
+
 }
