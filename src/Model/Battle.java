@@ -1,6 +1,5 @@
 package Model;
 
-import Controller.Controller;
 import Model.Gotchi.Action;
 import Model.Gotchi.Gotchi;
 import Model.Gotchi.Type;
@@ -13,6 +12,8 @@ import static Model.Gotchi.Action.ATTACK;
 public class Battle implements Runnable{
 
     private boolean working =true;
+
+    private int round = 0;
 
     static ArrayList<Gotchi> gotchis = new ArrayList<>();
 
@@ -160,18 +161,22 @@ public class Battle implements Runnable{
     public void run() {
         while(working){
             if (gotchis.size() == 2){
-                if(gotchis.get(0).getAction() != null && gotchis.get(0).getAction() != null){
-                    System.out.println("Round start...");
+                if(gotchis.get(0).getAction() != null && gotchis.get(1).getAction() != null){
+                    System.out.println("Round "+ round +" start...");
                     battleResults();
+                    round++;
                     for (Gotchi gotchi: gotchis
                          ) {
                         gotchi.resetAction();
                     }
                 }else{
                     System.out.println("Waiting for all players action");
+                    synchronized (gotchis.get(1)){
+                        gotchis.get(1).notify();
+                    }
+
                     waitForChange();
                 }
-
             }else{
                 System.out.println("Arena: Waiting for players");
                 waitForChange();

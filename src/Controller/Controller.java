@@ -57,6 +57,7 @@ public class Controller implements Observer {
         try {
             BattleView battleViewController= new BattleView();
             battleViewController.addObserver(this);
+            battleViewController.attachPlayer(player1);
             battleView = battleViewController.getBattleScene();
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,11 +74,16 @@ public class Controller implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         String[] arguments = (String[]) arg;
-    if ( arguments[0].equals("loginScreen") ){
-        setScene2();
-    }
+        if ( arguments[0].equals("loginScreen") ){
+            setScene2();
+        }
         if ( arguments[0].equals("gotchiChoose") ){
             setScene3();
+        }
+        if ( arguments[0].equals("PlayersAction") ){
+            synchronized (arena){
+                arena.notify();
+            }
         }
     }
 }

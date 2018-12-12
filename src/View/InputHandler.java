@@ -28,11 +28,17 @@ public class InputHandler extends Observable {
         return true;
     }
 
-
     public void handleChooseGothi() {
         infoToSend = new String[2];
         infoToSend[0] = "gotchiChoose";
         infoToSend[1] = "choosed";
+        setChanged();
+        notifyObservers(infoToSend);
+    }
+
+    public void handlePlayersAction(){
+        infoToSend = new String[1];
+        infoToSend[0] = "PlayersAction";
         setChanged();
         notifyObservers(infoToSend);
     }

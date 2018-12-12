@@ -49,15 +49,21 @@ public class Player implements Runnable, Observer{
         while (true){
             if(name == null){
                 setName("CPU");
-            }
-            if (gotchi == null){
                 chooseRandomGotchi();
+                waitForChange();
             }
-            synchronized (this){
-                try {
-                    this.wait();
-                } catch (InterruptedException ignored) {}
+            if(gotchi.getAction() == null){
+                gotchi.attack();
+                waitForChange();
             }
+        }
+    }
+
+    private void waitForChange() {
+        synchronized (gotchi){
+            try {
+                gotchi.wait();
+            } catch (InterruptedException ignored) {}
         }
     }
 
