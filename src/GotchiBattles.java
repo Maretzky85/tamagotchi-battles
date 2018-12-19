@@ -12,7 +12,7 @@ public class GotchiBattles extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Controller controller = new Controller(primaryStage);
+        Controller.getInstance().initiateLoginScreen(primaryStage);
     }
 
     public static void main(String[] args) {

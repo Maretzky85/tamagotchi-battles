@@ -1,10 +1,10 @@
 package View;
 
-public class Property {
+public class gotchiProperty {
     String Parametr;
     double Results;
 
-    public Property(String parametr, double results) {
+    public gotchiProperty(String parametr, double results) {
         this.Parametr = parametr;
         this.Results = results;
     }

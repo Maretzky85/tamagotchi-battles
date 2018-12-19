@@ -1,7 +1,6 @@
 package Model;
 
 import Model.Gotchi.Gotchi;
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import java.util.Observable;
 import java.util.Observer;

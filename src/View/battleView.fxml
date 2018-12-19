@@ -144,7 +144,7 @@
       </GridPane>
    </center>
    <left>
-      <ImageView fx:id="playerCotchi" fitHeight="200.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <ImageView fx:id="playerGotchi" fitHeight="200.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </left>
    <right>
       <ImageView fx:id="computerGotchi" fitHeight="200.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />

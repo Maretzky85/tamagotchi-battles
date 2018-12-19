@@ -12,28 +12,33 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class BattleView{
     Player player1;
+    Player computer;
 
-    ObservableList<Property> data;
+    ObservableList<gotchiProperty> data;
 
     InputHandler inputHandler = new InputHandler();
 
-    Property health;
-    Property stamina;
-    Property speed;
-    Property attack;
-    Property defense;
+    gotchiProperty health;
+    gotchiProperty stamina;
+    gotchiProperty speed;
+    gotchiProperty attack;
+    gotchiProperty defense;
 
     @FXML
     private Label player;
 
     @FXML
     private TableView playerTable;
+
+    @FXML
+    private TableView computerTable;
 
     @FXML
     private Button dodgeAction;
@@ -56,9 +61,15 @@ public class BattleView{
     Parent root = loadSceneFromFxml(this);
     Scene battleScene;
 
-    public void attachPlayer(Player player){
-        this.player1 = player;
-        addPlayer(player1);
+    public void attachPlayer(Player player, int playerNumber){
+        if(playerNumber == 1)
+        {
+            this.player1 = player;
+            addPlayer(player1, true);
+        }else {
+            this.computer = player;
+            addPlayer(computer, false);
+        }
     }
 
     public BattleView() throws IOException {
@@ -107,27 +118,46 @@ public class BattleView{
         return battleScene;
     }
 
-    public void addPlayer(Player player1) {
-        player.setText(player1.getName());
-        Gotchi playersGotchi = player1.getGotchi();
-        health = new Property("Health",playersGotchi.getHealth());
-        stamina = new Property("Stamina", playersGotchi.getStamina());
-        speed = new Property("Speed", playersGotchi.getSpeed());
-        attack = new Property("Attack",playersGotchi.getAttack());
-        defense = new Property("Defense", playersGotchi.getDefense());
+    private void addPlayer(Player player, boolean isPlayerHuman) {
+
+        TableView currentPlayerTableName;
+        Image image = new Image(player.getGotchi().getImageUrl());
+
+        if(isPlayerHuman) {
+
+            currentPlayerTableName = playerTable;
+        } else {
+
+            currentPlayerTableName = computerTable;
+        }
+
+
+        this.player.setText(player.getName());
+        System.out.println(player.getName());
+        Gotchi playersGotchi = player.getGotchi();
+        health = new gotchiProperty("Health",playersGotchi.getHealth());
+        stamina = new gotchiProperty("Stamina", playersGotchi.getStamina());
+        speed = new gotchiProperty("Speed", playersGotchi.getSpeed());
+        attack = new gotchiProperty("Attack",playersGotchi.getAttack());
+        defense = new gotchiProperty("Defense", playersGotchi.getDefense());
         data = FXCollections.observableArrayList(
                 health,
                 stamina,
                 speed,
                 attack,
                 defense
-        );
-        TableColumn firstCol = (TableColumn) playerTable.getColumns().get(0);
-        firstCol.setCellValueFactory(new PropertyValueFactory<Property, String>("Parametr"));
-        TableColumn secondCol = (TableColumn) playerTable.getColumns().get(1);
-        secondCol.setCellValueFactory(new PropertyValueFactory<Property, String>("Results"));
-        playerTable.setItems(data);
+            );
 
+        TableColumn firstCol = (TableColumn) currentPlayerTableName.getColumns().get(0);
+        firstCol.setCellValueFactory(new PropertyValueFactory<gotchiProperty, String>("Parametr"));
+        TableColumn secondCol = (TableColumn) currentPlayerTableName.getColumns().get(1);
+        secondCol.setCellValueFactory(new PropertyValueFactory<gotchiProperty, String>("Results"));
+        currentPlayerTableName.setItems(data);
+
+
+    }
+
+    public void updateBattleStats(TableView currentPlayerTableName){
 
     }
 }

@@ -15,7 +15,7 @@ import java.util.Observer;
 
 public class Controller implements Observer {
 
-    Stage primaryStage;
+    private Stage primaryStage;
     Battle arena = new Battle();
 
     LoginScreen loginView = new LoginScreen();
@@ -23,14 +23,28 @@ public class Controller implements Observer {
     Scene battleView;
 
     Player player1 = new Player();
-    Player player2 = new Player();
+    Player computer = new Player();
 
+    private static Controller instance;
 
+    private Controller(){
+    }
 
-    public Controller(Stage primaryStage){
+    public static Controller getInstance(){
+        if(instance == null){
+            instance = new Controller();
+        }
+        return instance;
+    }
+
+    public void initiateLoginScreen(Stage stage){
+        primaryStage = stage;
+        setScene1();
+    }
+
+    private void setScene1(){
         loginView.addObserver(this);
         loginView.addObserver(player1);
-        this.primaryStage = primaryStage;
 
         Thread arenaRunner = new Thread(arena);
         arenaRunner.setDaemon(true);
@@ -42,7 +56,7 @@ public class Controller implements Observer {
     }
 
     private void setScene2(){
-        Thread playerThread = new Thread(player2);
+        Thread playerThread = new Thread(computer);
         playerThread.setDaemon(true);
         playerThread.start();
 
@@ -53,11 +67,12 @@ public class Controller implements Observer {
 
     private void setScene3(){
         arena.addPlayer(player1.getGotchi());
-        arena.addPlayer(player2.getGotchi());
+        arena.addPlayer(computer.getGotchi());
         try {
             BattleView battleViewController= new BattleView();
             battleViewController.addObserver(this);
-            battleViewController.attachPlayer(player1);
+            battleViewController.attachPlayer(player1, 1);
+            battleViewController.attachPlayer(computer, 2);
             battleView = battleViewController.getBattleScene();
         } catch (IOException e) {
             System.out.println("File problem");
@@ -85,6 +100,10 @@ public class Controller implements Observer {
                 arena.notify();
             }
         }
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }
 
